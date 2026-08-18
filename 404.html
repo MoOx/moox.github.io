@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>404 — Not found</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-content: center;
+        gap: 1rem;
+        padding: 2rem;
+        text-align: center;
+        font: 1rem/1.6 system-ui, sans-serif;
+      }
+      h1 { margin: 0; font-size: 3rem; letter-spacing: -0.02em; }
+      p { margin: 0; }
+      .hint { opacity: 0.7; font-size: 0.9rem; }
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <h1>404</h1>
+    <p>There is nothing at <code id="path"></code> on this domain.</p>
+    <p><a href="https://moox.io/">Go to moox.io</a> — or browse <a href="https://github.com/MoOx">my projects on GitHub</a>.</p>
+    <p class="hint" id="repo" hidden></p>
+    <script>
+      document.getElementById("path").textContent = location.pathname;
+
+      // This page is the fallback 404 for the whole moox.github.io domain, so a
+      // miss is usually a project page: point at the repository it would be
+      // published from. Repo names are limited to these characters, which also
+      // keeps anything odd in the URL out of the link.
+      var name = location.pathname.split("/")[1];
+      if (name && /^[A-Za-z0-9._-]+$/.test(name)) {
+        var p = document.getElementById("repo");
+        var a = document.createElement("a");
+        a.href = "https://github.com/MoOx/" + name;
+        a.textContent = "MoOx/" + name;
+        p.append("Looking for ", a, "?");
+        p.hidden = false;
+      }
+    </script>
+  </body>
+</html>
